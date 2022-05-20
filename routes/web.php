@@ -8,6 +8,6 @@ use App\Http\Controllers\admin\DashboardController;
 /**
  * admin route
  */
-Route::get('admin-dashboard', [DashboardController::class, 'showDashboard']);
-Route::get('admin-login', [LoginController::class, 'showLogin']);
+Route::get('admin-dashboard', [DashboardController::class, 'showDashboard'])-> name('admin.dashboard');
+Route::get('admin-login', [LoginController::class, 'showLogin'])->name('admin.login');
 
