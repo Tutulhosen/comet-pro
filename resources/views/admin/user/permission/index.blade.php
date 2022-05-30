@@ -18,6 +18,10 @@
 							<div class="card">
 								<div class="card-header">
 									<h4 class="card-title">Basic Form</h4>
+                                    @if (Session::has('success-mid'))
+                                    @include('validate.validate')
+                                    @endif
+
 								</div>
 								<div class="card-body">
 									<table class="table table-striped">
@@ -31,39 +35,85 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ($permission_data as $data)
                                             <tr>
-                                                <td>1</td>
-                                                <td>Slider</td>
-                                                <td>Slider</td>
-                                                <td>10min ago</td>
+                                                <td>{{$loop->index+1}}</td>
+                                                <td>{{ $data->name }}</td>
+                                                <td>{{$data->slug}}</td>
+                                                <td>{{$data->created_at->diffForHumans() }}</td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-sm btn-danger" href=""><i class="fa fa-trash"></i></a>
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('permission.edit' , $data->id) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-danger" href="{{ route('permission.delete' , $data->id) }}"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
+                                            @empty
+
+                                            @endforelse
+
                                         </tbody>
                                     </table>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div class="card">
+                            @if (Session::has('success'))
+                            @include('validate.validate')
+                            @endif
+
+                            @if ($form_type==='add')
+                            <div class="card">
 								<div class="card-header">
 									<h4 class="card-title">Add New Permission</h4>
 								</div>
 								<div class="card-body">
-									<form action="#">
+
+									<form action="{{route('permission.store')}}" method="POST">
+                                        @csrf
 										<div class="form-group">
 											<label>Permission name</label>
-											<input type="text" class="form-control">
+											<input name="name" type="text" class="form-control">
 										</div>
+
 
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary">Submit</button>
 										</div>
 									</form>
+
+
 								</div>
 							</div>
+                            @endif
+
+                            @if ($form_type==='edit')
+                            <div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Edit Permission</h4>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('admin.permission') }}">Add new permission</a>
+								</div>
+								<div class="card-body">
+
+									<form action="{{route('permission.update', $permission_id->id)}}" method="POST">
+                                        @csrf
+										<div class="form-group">
+											<label>Permission name</label>
+											<input name="name" type="text" class="form-control" value="{{ $permission_id->name }}">
+										</div>
+
+
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary">Update</button>
+										</div>
+									</form>
+
+
+								</div>
+							</div>
+                            @endif
+
+
+
 						</div>
+
 					</div>
 @endsection

@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
+use App\Models\Permission;
 
 /**
  * admin route
@@ -17,7 +18,11 @@ Route::get('admin-login', [LoginController::class, 'showLogin'])->name('admin.lo
 /**
  * permission route
  */
-Route::get('admin-permission', [PermissionController::class, 'index'])->name('admin.permission');
+Route::get('permission', [PermissionController::class, 'index'])->name('admin.permission');
+Route::post('permission-get', [PermissionController::class, 'store'])->name('permission.store');
+Route::get('permission-delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
+Route::get('permission-edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+Route::post('permission-update/{id}', [PermissionController::class, 'update'])->name('permission.update');
 
 /**
  * role route
