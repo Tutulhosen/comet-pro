@@ -47,7 +47,11 @@
                                                 </td>
                                             </tr>
                                             @empty
-
+                                            <tr>
+                                                <td>
+                                                    <p class="d-flix justify-content-center">No permission data found</p>
+                                                </td>
+                                            </tr>
                                             @endforelse
 
                                         </tbody>
