@@ -30,6 +30,8 @@ Route::post('permission-update/{id}', [PermissionController::class, 'update'])->
 Route::get('role', [RoleController::class, 'index'])->name('admin.role');
 Route::post('role', [RoleController::class, 'store'])->name('role.store');
 Route::get('role-delete/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+Route::get('role-edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+Route::post('role-update/{id}', [RoleController::class, 'update'])->name('role.update');
 
 /**
  * admin user route

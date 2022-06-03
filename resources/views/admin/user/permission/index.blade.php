@@ -48,8 +48,8 @@
                                             </tr>
                                             @empty
                                             <tr>
-                                                <td>
-                                                    <p class="d-flix justify-content-center">No permission data found</p>
+                                                <td class=" col-span-4">
+                                                    <p >No permission data found</p>
                                                 </td>
                                             </tr>
                                             @endforelse

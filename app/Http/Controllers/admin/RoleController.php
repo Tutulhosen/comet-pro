@@ -17,7 +17,20 @@ class RoleController extends Controller
     {
         $permission_data= Permission::all();
         $role_data             = Role::latest()->get();
-        return view('admin.user.role.index', compact('permission_data','role_data'));
+        $fun                        = 'role';
+        return view('admin.user.role.index', compact('permission_data','role_data', 'fun'));
+    }
+
+        /**
+     * show role page
+     */
+    public function edit($id)
+    {
+        $permission_data= Permission::all();
+        $role_data             = Role::latest()->get();
+        $role_id                  = Role::findOrfail($id);
+        $fun                        = 'edit';
+        return view('admin.user.role.index', compact('permission_data','role_data','fun', 'role_id'));
     }
 
     /**
@@ -55,6 +68,20 @@ class RoleController extends Controller
         return back()->with('success-mid', 'The role is deleted');
     }
 
+    /**
+     * update role data
+     */
+
+public function update(Request $request, $id)
+{
+    $update_id = Role::findOrFail($id);
+    $update_id->update([
+        'name'                          => $request->name,
+        'slug'                             => Str::slug($request->name),
+        'permission'                => json_encode($request->per),
+    ]);
+    return redirect()->route('admin.role')->with('success', 'successfully update the role data');
+}
 
 
 

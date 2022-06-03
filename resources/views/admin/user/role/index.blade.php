@@ -2,6 +2,7 @@
 
 @section('main-content')
 					<!-- Page Header -->
+
 					<div class="page-header">
 						<div class="row">
 							<div class="col-sm-12">
@@ -36,31 +37,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($role_data as $item)
+                                            @forelse ($role_data as $role)
                                             <tr>
                                                 <td>{{ $loop->index+1 }}</td>
-                                                <td>{{$item->name}}</td>
-                                                <td>{{$item->slug}}</td>
+                                                <td>{{$role->name}}</td>
+                                                <td>{{$role->slug}}</td>
+
                                                 <td>
 
-                                                    {{-- <ul>
-                                                        @forelse (json_decode($item->permission)as $per)
-                                                            <li>{{$per}}</li>
-                                                        @empty
+                                                    <ul>
+                                                        @foreach (json_decode($role->permission) as $permission)
+                                                        <li>{{ $permission }}</li>
+                                                        @endforeach
+                                                    </ul>
 
-                                                        @endforelse
-                                                    </ul> --}}
                                                 </td>
-                                                <td>{{$item->created_at->diffForhumans()}}</td>
+                                                <td>{{$role->created_at->diffForhumans()}}</td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-warning" href=""><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-sm btn-danger" href="{{ route('role.destroy', $item->id) }}"><i class="fa fa-trash"></i></a>
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('role.edit', $role->id) }}"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-danger" href="{{ route('role.destroy', $role->id) }}"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                             @empty
                                                 <tr>
                                                     <td>
-                                                        <p >No role data found</p>
+                                                        <p  >No role data found</p>
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -71,23 +72,79 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Add New Role</h4>
-								</div>
-                                @if (Session::has('success')|| $errors->any())
-                                @include('validate.validate')
+
+
+                                {{-- role index part  --}}
+
+                                @if ($fun==='role')
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Add New Role</h4>
+                                    </div>
+                                    @if (Session::has('success')|| $errors->any())
+                                    @include('validate.validate')
+                                    @endif
+
+                                    <div class="card-body">
+
+
+                                        <form action="" method="POST">
+                                            @csrf
+
+                                            <div class="form-group">
+                                                <label>Role name</label>
+                                                <input name="name" type="text" class="form-control">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Permissions</label>
+
+                                                @forelse ($permission_data as $item)
+                                                <label class="d-block" for="">
+                                                    <input  name="per[]" value="{{$item->name}}" type="checkbox" >
+                                                    {{$item->name}}
+                                                </label>
+                                                @empty
+                                                    no permission found
+                                                @endforelse
+
+
+                                            </div>
+
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
                                 @endif
+
+
+                                {{-- role edit part  --}}
+
+                            @if ($fun==='edit')
+                            <div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Edit Role</h4>
+								</div>
+
+                                <div class="card-header">
+									<a class="btn btn-primary btn-sm" href="{{ route('admin.role') }}">Add new role</a>
+								</div>
 
 								<div class="card-body">
 
-
-									<form action="" method="POST">
+                                    @include('validate.validate')
+									<form action="{{ route('role.update', $role_id->id) }}" method="POST">
                                         @csrf
 
 										<div class="form-group">
 											<label>Role name</label>
-											<input name="name" type="text" class="form-control">
+											<input name="name" type="text" class="form-control" value="{{$role_id->name}}">
 										</div>
 
 
@@ -96,9 +153,10 @@
 
                                             @forelse ($permission_data as $item)
                                             <label class="d-block" for="">
-                                                <input name="per[]" value="{{$item->name}}" type="checkbox">
-                                                {{$item->name}}
-                                            </label>
+                                                <input
+                                                 name="per[]" @if (in_array($item->name , json_decode($role_id->permission)))
+                                                @checked(true)
+                                                 @endif value="{{$item->name}}" type="checkbox">{{$item->name}} </label>
                                             @empty
                                                 no permission found
                                             @endforelse
@@ -114,6 +172,13 @@
 
 								</div>
 							</div>
+                            @endif
+
+
+
 						</div>
 					</div>
+
 @endsection
+
+
