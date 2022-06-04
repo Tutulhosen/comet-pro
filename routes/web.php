@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
 use App\Models\Permission;
+use App\Models\Role;
 
 /**
  * admin route
@@ -37,3 +38,6 @@ Route::post('role-update/{id}', [RoleController::class, 'update'])->name('role.u
  * admin user route
  */
 Route::get('admin-user', [AdminUserController::class, 'index'])->name('admin.user');
+Route::post('admin-create', [AdminUserController::class, 'create'])->name('admin.user.create');
+Route::get('admin-user-delete/{id}', [AdminUserController::class, 'destroy'])->name('admin.user.delete');
+Route::get('admin-user-edit/{id}', [AdminUserController::class, 'edit'])->name('admin.user.edit');

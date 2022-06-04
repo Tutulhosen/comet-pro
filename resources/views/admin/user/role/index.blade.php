@@ -46,9 +46,11 @@
                                                 <td>
 
                                                     <ul>
-                                                        @foreach (json_decode($role->permission) as $permission)
+                                                        @forelse (json_decode($role->permission) as $permission)
                                                         <li>{{ $permission }}</li>
-                                                        @endforeach
+                                                        @empty
+                                                        <p>No permission found</p>
+                                                        @endforelse
                                                     </ul>
 
                                                 </td>
@@ -60,7 +62,7 @@
                                             </tr>
                                             @empty
                                                 <tr>
-                                                    <td>
+                                                    <td colspan="6" class="text-center" >
                                                         <p  >No role data found</p>
                                                     </td>
                                                 </tr>
@@ -107,7 +109,7 @@
                                                     {{$item->name}}
                                                 </label>
                                                 @empty
-                                                    no permission found
+                                                    <p style="color: red">no permission found</p>
                                                 @endforelse
 
 

@@ -48,7 +48,7 @@
                                             </tr>
                                             @empty
                                             <tr>
-                                                <td class=" col-span-4">
+                                                <td colspan="5" class="text-center">
                                                     <p >No permission data found</p>
                                                 </td>
                                             </tr>
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-                            @if (Session::has('success'))
+                            @if (Session::has('success')|| $errors->any())
                             @include('validate.validate')
                             @endif
 
