@@ -44,7 +44,7 @@ class PermissionController extends Controller
      //validation
 
      $this->validate($request, [
-         'name'         => 'required',
+         'name'         => 'required|unique:permissions',
      ]);
 
      //store data

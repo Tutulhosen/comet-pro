@@ -45,7 +45,6 @@ class AdminUserController extends Controller
             'email'                        =>'required|unique:admin_users',
             'username'                =>'required|unique:admin_users',
             'cell'                            =>'required|unique:admin_users',
-            'password'                 =>'required',
         ]);
 
         AdminUser::create([
@@ -53,7 +52,7 @@ class AdminUserController extends Controller
             'email'                              =>$request->email,
             'username'                      =>$request->username,
             'cell'                                  =>$request->cell,
-            'password'                      =>Hash::make($request->password),
+            'password'                      =>Hash::make('123456789'),
             'role_id'                            =>$request->role,
         ]);
         return redirect()->route('admin.user')->with('success', 'Successfully add a new user');
@@ -75,6 +74,24 @@ class AdminUserController extends Controller
             return back()->with('success-mid', 'Admin data is deleted');
         }
 
+    }
+
+    /**
+     * update user data
+     */
+    public function updateAdmin(Request $request, $id)
+    {
+
+        $update_data= AdminUser::findOrFail($id);
+        $update_data->update([
+            'name'                              =>$request->name,
+            'email'                              =>$request->email,
+            'username'                      =>$request->username,
+            'cell'                                  =>$request->cell,
+            'role_id'                            =>$request->role,
+            'photo'                              => 'avatar.png'
+        ]);
+        return redirect()->route('admin.user')->with('succcss', 'successfully update the admin user data');
     }
 
 

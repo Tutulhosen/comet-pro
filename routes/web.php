@@ -41,3 +41,4 @@ Route::get('admin-user', [AdminUserController::class, 'index'])->name('admin.use
 Route::post('admin-create', [AdminUserController::class, 'create'])->name('admin.user.create');
 Route::get('admin-user-delete/{id}', [AdminUserController::class, 'destroy'])->name('admin.user.delete');
 Route::get('admin-user-edit/{id}', [AdminUserController::class, 'edit'])->name('admin.user.edit');
+Route::post('admin-user-update/{id}', [AdminUserController::class, 'updateAdmin'])->name('admin.user.update');

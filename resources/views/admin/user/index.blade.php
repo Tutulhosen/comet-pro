@@ -32,8 +32,8 @@
                                                 <td>Email</td>
                                                 <td>Cell</td>
                                                 <td>Role</td>
-                                                <td>Create_at</td>
-                                                <td>Action</td>
+                                                <td>Created At</td>
+                                             <td>Action</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -47,8 +47,11 @@
                                                 <td>{{$admin_user->role->name}}</td>
                                                 <td>{{$admin_user->created_at->diffForHumans() }}</td>
                                                 <td>
+                                                    @if ($admin_user->name != 'Super Admin' || $admin_user->email !='admin@admin.com')
                                                     <a class="btn btn-sm btn-warning" href="{{ route('admin.user.edit', $admin_user->id) }}"><i class="fa fa-edit"></i></a>
                                                     <a class="btn btn-sm btn-danger delete_btn" href="{{ route('admin.user.delete', $admin_user->id) }}"><i class="fa fa-trash"></i></a>
+                                                    @endif
+
                                                 </td>
                                                 @empty
                                                 <tr>
@@ -106,10 +109,6 @@
 										</div>
 
                                         <div class="form-group">
-											<label>Password</label>
-											<input name="password" type="text" class="form-control">
-										</div>
-                                        <div class="form-group">
 											<label>Role</label>
 											<select class="form-control" name="role" id="">
                                                 <option value="">--select--</option>
@@ -147,7 +146,7 @@
 								<div class="card-body">
 
 
-									<form action="{{route('admin.user.edit', $edit_user_data->id)}}" method="POST">
+									<form action="{{route('admin.user.update', $edit_user_data->id)}}" method="POST">
                                         @csrf
 										<div class="form-group">
 											<label>Name</label>
@@ -170,15 +169,11 @@
 										</div>
 
                                         <div class="form-group">
-											<label>Password</label>
-											<input name="password" type="text" class="form-control">
-										</div>
-                                        <div class="form-group">
 											<label>Role</label>
 											<select class="form-control" name="role" id="">
                                                 <option value="">--select--</option>
                                                 @forelse ($role_data as $role)
-                                                    <option @if ($role->name == $edit_user_data->role)
+                                                    <option @if ($role->id == $edit_user_data->role_id) selected
                                                     @endif value="{{$role->id}}">{{$role->name}}</option>
                                                 @empty
                                                 <option>No Role data found</option>
