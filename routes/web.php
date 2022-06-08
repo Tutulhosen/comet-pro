@@ -65,6 +65,7 @@ Route::post('admin-user-update/{id}', [AdminUserController::class, 'updateAdmin'
 // profile route
 
 Route::get('admin-user-profile', [ProfileController::class, 'showProfile'])->name('admin.user.profile');
+Route::post('admin-user-profile-photo-upload/{id}',[ProfileController::class, 'uploadPhoto'])->name('admin.user.profile.upload.photo');
 
 
 

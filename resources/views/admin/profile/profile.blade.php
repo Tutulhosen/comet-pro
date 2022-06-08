@@ -7,7 +7,7 @@
                 <div class="row align-items-center">
                     <div class="col-auto profile-image">
                         <a href="#">
-                            <img style="height: 150px; width:150px;object-fit:cover" class="rounded-circle" alt="User Image" src="{{url('storage/admin/' . Auth::guard('admin')->user()->photo)}}">
+                            <img style="height: 100px; width:100px; object-fit:cover" class="rounded-circle" alt="User Image" src="{{url('storage/admin/' . Auth::guard('admin')->user()->photo)}}">
                         </a>
                     </div>
                     <div class="col ml-md-n2 profile-user-info">
@@ -53,27 +53,21 @@
                                     </h5>
                                     <div class="row">
                                         <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
-                                        <p class="col-sm-10">John Doe</p>
+                                        <p class="col-sm-10">{{Auth::guard('admin')->user()->name}}</p>
                                     </div>
                                     <div class="row">
-                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Date of Birth</p>
-                                        <p class="col-sm-10">24 Jul 1983</p>
+                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Email</p>
+                                        <p class="col-sm-10">{{Auth::guard('admin')->user()->email}}</p>
                                     </div>
                                     <div class="row">
-                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Email ID</p>
-                                        <p class="col-sm-10">johndoe@example.com</p>
+                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Cell</p>
+                                        <p class="col-sm-10">{{Auth::guard('admin')->user()->cell}}</p>
                                     </div>
                                     <div class="row">
-                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
-                                        <p class="col-sm-10">305-310-5857</p>
+                                        <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Role</p>
+                                        <p class="col-sm-10">{{Auth::guard('admin')->user()->role->name}}</p>
                                     </div>
-                                    <div class="row">
-                                        <p class="col-sm-2 text-muted text-sm-right mb-0">Address</p>
-                                        <p class="col-sm-10 mb-0">4663  Agriculture Lane,<br>
-                                        Miami,<br>
-                                        Florida - 33165,<br>
-                                        United States.</p>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -211,9 +205,10 @@
                                             <h5 class="card-title">Change Password</h5>
                                             <div class="row">
                                                 <div class="col-md-10 col-lg-6">
-                                                    <form>
+                                                    <form action="{{route('admin.user.profile.upload.photo' , Auth::guard('admin')->user()->id)}}" method="POST", enctype="multipart/form-data">
+                                                        @csrf
                                                         <div class="form-group">
-                                                            <input style="display: none" id="photo" type="file" >
+                                                            <input name="photo" style="display: none" id="photo" type="file" >
                                                             <label for="photo"><img style="height: 150px;width:160px;cursor:pointer" src="https://t4.ftcdn.net/jpg/02/83/72/41/360_F_283724163_kIWm6DfeFN0zhm8Pc0xelROcxxbAiEFI.jpg" alt=""></label>
                                                         </div>
 
