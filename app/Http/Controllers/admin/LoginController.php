@@ -31,7 +31,7 @@ class LoginController extends Controller
         ])) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->route('admin.login')->with('session-mid', 'wrong email or password');
+            return redirect()->route('admin.login')->with('success-mid', 'wrong email or password');
         }
 
     }
