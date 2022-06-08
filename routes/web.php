@@ -10,12 +10,26 @@ use App\Http\Controllers\admin\RoleController;
 use App\Models\Permission;
 use App\Models\Role;
 
+
+// admin redirect middleware
+Route::group(['middleware'   => 'admin.redirect'], function(){
 /**
  * admin route
  */
-Route::get('admin-dashboard', [DashboardController::class, 'showDashboard'])-> name('admin.dashboard');
 Route::get('admin-login', [LoginController::class, 'showLogin'])->name('admin.login');
+Route::post('admin-login', [LoginController::class, 'loginSystem'])->name('admin.login.system');
+});
 
+
+
+
+// admin middleware
+Route::group(['middleware' => 'admin'], function(){
+/**
+ * admin  route
+ */
+    Route::get('admin-dashboard', [DashboardController::class, 'showDashboard'])-> name('admin.dashboard');
+    Route::get('admin-logout', [LoginController::class, 'logoutSystem'])->name('admin.logout.system');
 /**
  * permission route
  */
@@ -42,3 +56,5 @@ Route::post('admin-create', [AdminUserController::class, 'create'])->name('admin
 Route::get('admin-user-delete/{id}', [AdminUserController::class, 'destroy'])->name('admin.user.delete');
 Route::get('admin-user-edit/{id}', [AdminUserController::class, 'edit'])->name('admin.user.edit');
 Route::post('admin-user-update/{id}', [AdminUserController::class, 'updateAdmin'])->name('admin.user.update');
+
+});
